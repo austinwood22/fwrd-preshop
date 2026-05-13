@@ -1,0 +1,2259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AW PreShop">
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Ralph Lauren Collection — Pre-Spring 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+:root{
+  --bg:#fff;--s1:#f9f9f9;--s2:#f2f2f2;
+  --blk:#000;--chr:#111;--mid:#888;--lt:#ccc;--rule:#e5e5e5;
+  --text:#111;--t2:#555;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;font-weight:400;-webkit-font-smoothing:antialiased}
+img{display:block}
+
+/* GATE */
+.gate{position:fixed;inset:0;background:#000;z-index:900;display:flex;align-items:center;justify-content:center;padding:24px}
+.gate-box{width:100%;max-width:380px;text-align:center}
+.gate-rule{width:1px;height:40px;background:rgba(255,255,255,.15);margin:0 auto 48px}
+.gate-season{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:10px}
+.gate-title{font-family:'Cormorant',serif;font-size:clamp(32px,7vw,52px);font-weight:500;color:#fff;line-height:1.0;margin-bottom:36px}
+.gate-title em{font-style:italic;opacity:.65}
+.gate-input{width:100%;height:46px;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.2);color:#fff;padding:0 2px;font-size:13px;font-family:'Space Grotesk',sans-serif;font-weight:400;outline:none;letter-spacing:.03em;transition:border-color .2s;text-align:center;margin-bottom:16px}
+.gate-input::placeholder{color:rgba(255,255,255,.2)}
+.gate-input:focus{border-bottom-color:rgba(255,255,255,.7)}
+.gate-input.err{border-bottom-color:#c04040;animation:shake .3s ease}
+.gate-btn{width:100%;height:46px;background:#fff;color:#000;border:none;cursor:pointer;font-size:9px;letter-spacing:.45em;text-transform:uppercase;font-weight:500;font-family:'Space Grotesk',sans-serif;transition:opacity .15s}
+.gate-btn:hover{opacity:.75}
+.gate-note{margin-top:16px;font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.4);line-height:1.7}
+
+/* LOGO */
+.hdr-logo-img{height:18px;display:block;flex-shrink:0}
+.hero-logo-img{height:28px;display:block;margin-bottom:14px}
+
+/* HEADER */
+.hdr{background:#000;height:50px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
+.hdr-right{display:flex;align-items:center;gap:16px}
+.hdr-pill{font-size:8.5px;letter-spacing:.12em;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:0 9px;height:22px;border-radius:11px;display:none;align-items:center;gap:4px;max-width:180px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.hdr-dot{width:4px;height:4px;border-radius:50%;background:#fff;opacity:.4;flex-shrink:0}
+.cart-btn{display:flex;align-items:center;gap:7px;background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;padding:0 12px;height:30px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:8.5px;letter-spacing:.3em;text-transform:uppercase;font-weight:400;transition:border-color .15s}
+.cart-btn:hover{border-color:rgba(255,255,255,.55)}
+.cart-n{background:#fff;color:#000;font-size:8px;font-weight:700;min-width:15px;height:15px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 3px}
+.cart-n.pop{animation:pop .28s ease}
+@keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.55)}}
+
+/* HERO */
+.hero{background:#000;padding:44px 28px 36px;border-bottom:1px solid #1a1a1a}
+.hero-inner{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.hero-season{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:10px}
+.hero-title{font-family:'Cormorant',serif;font-size:clamp(28px,4vw,50px);font-weight:500;color:#fff;line-height:1.0}
+.hero-title em{font-style:italic;opacity:.7}
+.hero-sub{margin-top:12px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+/* SHOPPER PHOTO */
+.shopper-photo{width:64px;height:64px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,.15);flex-shrink:0;margin-bottom:10px}
+.shopper-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(100%)}
+.hero-contact{text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end}
+.gate-photo{width:72px;height:72px;border-radius:50%;overflow:hidden;border:1px solid rgba(255,255,255,.2);margin:0 auto 20px}
+.gate-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(100%)}
+.hc-tag{font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:5px}
+.hc-name{font-family:'Cormorant',serif;font-size:22px;color:#fff;font-weight:500}
+.hc-email{display:block;margin-top:5px;font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.55);border-bottom:1px solid rgba(255,255,255,.25);padding-bottom:2px;text-decoration:none;transition:color .15s}
+.hc-email:hover{color:rgba(255,255,255,.65)}
+
+/* BAR */
+.bar{background:#fff;border-bottom:1px solid var(--rule);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:44px;position:sticky;top:50px;z-index:199}
+.bar-l{display:flex;align-items:center;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.bar-l::-webkit-scrollbar{display:none}
+.ct{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);white-space:nowrap;padding-right:8px}
+.ct b{color:var(--text)}
+.bar-r{display:flex;gap:5px;flex-shrink:0;margin-left:8px}
+.vbtn{width:26px;height:26px;border:1px solid var(--rule);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--mid);transition:all .12s}
+.vbtn.on,.vbtn:hover{background:#000;border-color:#000;color:#fff}
+
+/* LOOKS GRID */
+.main{max-width:1080px;margin:0 auto;padding:24px 28px 80px}
+
+/* GRID VIEW */
+.looks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+@media(max-width:900px){.looks-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.looks-grid{grid-template-columns:1fr}}
+
+/* LIST VIEW */
+.looks-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--rule)}
+
+/* ── LOOK CARD (grid) ── */
+.look-card{background:var(--bg);animation:fu .35s ease both}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Photo */
+.look-photo{width:100%;aspect-ratio:2/3;overflow:hidden;background:var(--s1);position:relative;cursor:zoom-in}
+.look-photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.25,.1,.25,1)}
+.look-card:hover .look-photo img{transform:scale(1.03)}
+.look-label-badge{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);color:#fff;font-size:8px;letter-spacing:.25em;text-transform:uppercase;padding:4px 8px;font-weight:500}
+
+/* Info below photo */
+.look-info{padding:14px 0 0}
+.look-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--mid);margin-bottom:8px;font-weight:500}
+
+/* Item rows */
+.item-row{display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-top:1px solid var(--rule);gap:10px;cursor:pointer;transition:background .12s}
+.item-row:hover{background:var(--s1);margin:0 -8px;padding:10px 8px}
+.item-row.selected{background:#f0f0f0;margin:0 -8px;padding:10px 8px}
+.item-row.selected .ir-check{opacity:1}
+.ir-left{flex:1;min-width:0}
+.ir-name{font-family:'Cormorant',serif;font-size:14px;color:var(--text);line-height:1.25}
+.ir-color{font-size:8.5px;letter-spacing:.08em;color:var(--mid);margin-top:3px}
+.ir-sizes{font-size:8px;letter-spacing:.06em;color:var(--mid);margin-top:2px}
+.ir-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.ir-retail{font-size:11px;font-weight:500;color:var(--text);white-space:nowrap}
+.ir-check{width:18px;height:18px;border:1px solid var(--rule);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;opacity:0;transition:all .15s;background:#000}
+.ir-check svg{display:block}
+.item-row.selected .ir-check{opacity:1;border-color:#000}
+
+/* Add look btn */
+.add-look-btn{margin-top:12px;width:100%;height:36px;background:#000;color:#fff;border:none;cursor:pointer;font-size:8px;letter-spacing:.32em;text-transform:uppercase;font-weight:500;font-family:'Space Grotesk',sans-serif;transition:opacity .15s}
+.add-look-btn:hover{opacity:.7}
+.add-look-btn.partial{background:transparent;border:1px solid var(--rule);color:var(--text)}
+.add-look-btn.partial:hover{border-color:#000}
+.sel-count{font-size:8px;color:var(--mid);text-align:center;margin-top:6px;letter-spacing:.1em;min-height:14px}
+
+/* ── LIST VIEW CARD ── */
+.look-list-card{display:flex;gap:0;border-bottom:1px solid var(--rule);padding:20px 0;animation:fu .3s ease both}
+.llc-img{width:120px;min-width:120px;aspect-ratio:2/3;overflow:hidden;background:var(--s1);cursor:zoom-in;flex-shrink:0}
+.llc-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.look-list-card:hover .llc-img img{transform:scale(1.03)}
+.llc-body{flex:1;padding:0 20px}
+.llc-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--mid);margin-bottom:10px}
+.llc-items{display:flex;flex-direction:column;gap:0}
+.llc-add{margin-top:12px;display:flex;align-items:center;gap:10px}
+.llc-add-btn{height:32px;padding:0 16px;background:#000;color:#fff;border:none;cursor:pointer;font-size:8px;letter-spacing:.28em;text-transform:uppercase;font-weight:500;font-family:'Space Grotesk',sans-serif;transition:opacity .15s;white-space:nowrap}
+.llc-add-btn:hover{opacity:.7}
+.llc-add-btn.partial{background:transparent;border:1px solid var(--rule);color:var(--text)}
+.llc-sel{font-size:8.5px;color:var(--mid);letter-spacing:.08em}
+
+/* LIGHTBOX */
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:600;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;cursor:zoom-out}
+.lb.open{opacity:1;pointer-events:all}
+.lb img{max-height:90vh;max-width:90vw;object-fit:contain;box-shadow:0 20px 80px rgba(0,0,0,.5)}
+.lb-close{position:absolute;top:20px;right:24px;background:transparent;border:none;color:rgba(255,255,255,.5);font-size:28px;cursor:pointer;line-height:1;padding:0;transition:color .15s}
+.lb-close:hover{color:#fff}
+
+/* DRAWER */
+.dov{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;opacity:0;pointer-events:none;transition:opacity .2s}
+.dov.open{opacity:1;pointer-events:all}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:96vw;background:#fff;z-index:301;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.25,.1,.25,1);box-shadow:-8px 0 48px rgba(0,0,0,.1)}
+.dov.open .drawer{transform:none}
+.d-hdr{background:#000;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.d-title{font-family:'Cormorant',serif;font-size:18px;color:#fff;font-weight:500}
+.d-ct{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:2px}
+.d-cls{background:transparent;border:none;color:rgba(255,255,255,.65);font-size:20px;cursor:pointer;padding:0;line-height:1;transition:color .12s}
+.d-cls:hover{color:#fff}
+.d-email{background:var(--s1);border-bottom:1px solid var(--rule);padding:10px 20px;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.d-etag{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);white-space:nowrap}
+.d-eval{font-size:10.5px;color:var(--text)}
+.d-items{flex:1;overflow-y:auto}
+.d-empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--lt)}
+.d-empty-icon{font-size:28px;opacity:.3}
+.d-empty-txt{font-size:9px;letter-spacing:.22em;text-transform:uppercase}
+.ditem{display:flex;gap:12px;padding:14px 20px;border-bottom:1px solid var(--rule);animation:fu .2s ease both}
+.di-lbl{width:32px;flex-shrink:0;padding-top:3px}
+.di-lbl span{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--mid)}
+.di-info{flex:1;min-width:0}
+.di-name{font-family:'Cormorant',serif;font-size:14px;color:var(--text);line-height:1.25}
+.di-meta{font-size:8.5px;color:var(--mid);margin-top:3px;line-height:1.6}
+.di-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+.di-price{font-size:11px;font-weight:500;color:var(--text)}
+.di-rm{background:transparent;border:none;color:var(--lt);cursor:pointer;font-size:14px;padding:0;line-height:1;transition:color .12s}
+.di-rm:hover{color:#c04040}
+.d-foot{padding:16px 20px;border-top:1px solid var(--rule);flex-shrink:0;background:#fff}
+.d-sum{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.d-sum-l .ds-lbl{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--mid)}
+.d-sum-l .ds-n{font-size:8.5px;color:var(--mid);margin-top:1px;letter-spacing:.08em}
+.d-sum-r{font-family:'Cormorant',serif;font-size:20px;color:var(--text)}
+.send-btn{width:100%;height:42px;background:#000;color:#fff;border:none;cursor:pointer;font-size:9px;letter-spacing:.32em;text-transform:uppercase;font-weight:500;font-family:'Space Grotesk',sans-serif;transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.send-btn:hover{opacity:.7}
+.send-btn:disabled{opacity:.3;cursor:not-allowed}
+.spin{width:12px;height:12px;border:1.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .65s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.send-note{font-size:8px;text-align:center;color:var(--mid);letter-spacing:.08em;margin-top:8px;line-height:1.6}
+
+/* SUCCESS */
+.sscr{position:fixed;inset:0;background:#000;z-index:700;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s}
+.sscr.open{opacity:1;pointer-events:all}
+.ss-icon{font-size:36px;margin-bottom:18px}
+.ss-title{font-family:'Cormorant',serif;font-size:34px;color:#fff;margin-bottom:6px}
+.ss-sub{font-size:9px;letter-spacing:.3em;color:rgba(255,255,255,.55);text-transform:uppercase;margin-bottom:6px}
+.ss-detail{font-size:10px;color:rgba(255,255,255,.55);margin-bottom:28px;text-align:center;line-height:1.9;letter-spacing:.06em}
+.ss-back{font-size:8.5px;letter-spacing:.3em;text-transform:uppercase;height:38px;padding:0 22px;background:#fff;color:#000;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:opacity .15s}
+.ss-back:hover{opacity:.7}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:#000;color:#fff;padding:10px 16px;font-size:9px;letter-spacing:.15em;text-transform:uppercase;z-index:500;transform:translateY(12px);opacity:0;transition:all .25s cubic-bezier(.25,.1,.25,1);pointer-events:none;max-width:280px;border-left:2px solid rgba(255,255,255,.25)}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* FOOTER */
+.footer{background:#000;padding:22px 28px;display:flex;align-items:center;justify-content:space-between}
+.f-note{font-size:8.5px;letter-spacing:.1em;color:rgba(255,255,255,.45);text-align:right;line-height:1.9}
+
+/* SIZE PICKER MODAL */
+.sp-ov{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);z-index:800;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.sp-ov.open{opacity:1;pointer-events:all}
+@media(min-width:600px){.sp-ov{align-items:center}}
+.sp-sheet{background:#fff;width:100%;max-width:520px;border-radius:12px 12px 0 0;padding:0 0 env(safe-area-inset-bottom);transform:translateY(20px);transition:transform .25s cubic-bezier(.25,.1,.25,1)}
+@media(min-width:600px){.sp-sheet{border-radius:4px;transform:translateY(16px)}}
+.sp-ov.open .sp-sheet{transform:none}
+.sp-handle{width:36px;height:4px;background:var(--rule);border-radius:2px;margin:12px auto 0}
+@media(min-width:600px){.sp-handle{display:none}}
+.sp-hdr{padding:16px 20px 12px;border-bottom:1px solid var(--rule)}
+.sp-look{font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--mid);margin-bottom:4px}
+.sp-name{font-family:'Cormorant',serif;font-size:18px;color:var(--text);line-height:1.2}
+.sp-meta{font-size:9px;color:var(--mid);margin-top:3px;letter-spacing:.05em}
+.sp-body{padding:18px 20px 20px}
+.sp-lbl{font-size:8.5px;letter-spacing:.25em;text-transform:uppercase;color:var(--mid);font-weight:500;margin-bottom:10px}
+.sp-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+.sp-chip{height:34px;min-width:44px;padding:0 12px;border:1px solid var(--rule);background:transparent;cursor:pointer;font-size:11px;letter-spacing:.04em;font-weight:400;color:var(--text);transition:all .12s;font-family:'Space Grotesk',sans-serif;border-radius:2px}
+.sp-chip:hover{border-color:var(--text)}
+.sp-chip.on{background:#000;color:#fff;border-color:#000}
+.sp-chip.err{border-color:#c04040;animation:shake .3s ease}
+.sp-actions{display:flex;gap:8px}
+.sp-cancel{flex:1;height:40px;background:transparent;border:1px solid var(--rule);cursor:pointer;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;color:var(--mid);font-family:'Space Grotesk',sans-serif;transition:all .12s}
+.sp-cancel:hover{border-color:#000;color:#000}
+.sp-confirm{flex:2;height:40px;background:#000;border:none;cursor:pointer;font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;font-weight:500;color:#fff;font-family:'Space Grotesk',sans-serif;transition:opacity .15s}
+.sp-confirm:hover{opacity:.7}
+/* size badge on item row */
+.ir-size-badge{display:inline-block;margin-top:3px;font-size:8px;letter-spacing:.12em;background:#000;color:#fff;padding:2px 7px;border-radius:1px}
+
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div class="gate" id="gate">
+  <div class="gate-box">
+    <img src="logo.png" alt="FWRD Preferred" style="width:220px;opacity:.85;margin:0 auto 32px;display:block">
+    <div class="gate-photo"><img src="{{SHOPPER_PHOTO}}" alt="{{SHOPPER_NAME}}"></div>
+    <div class="gate-season">Curated by {{SHOPPER_NAME}}</div>
+    <h1 class="gate-title">Private<br><em>Pre-Shop</em></h1>
+    <input type="email" class="gate-input" id="gateEmail"
+      placeholder="your@email.com"
+      onkeydown="if(event.key==='Enter')gateGo()" />
+    <button class="gate-btn" onclick="gateGo()">Enter</button>
+    <p class="gate-note">Curated by {{SHOPPER_NAME}} · Your email is used only to process your request.</p>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="hdr">
+  <img src="logo.png" alt="FWRD Preferred" class="hdr-logo-img">
+  <div class="hdr-right">
+    <div class="hdr-pill" id="hdrPill">
+      <div class="hdr-dot"></div>
+      <span id="hdrEmail"></span>
+    </div>
+    <button class="cart-btn" onclick="openDrawer()">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M1 1h2l1.8 7.2a1 1 0 001 .8h5.4a1 1 0 001-.76L13 5H4"/>
+        <circle cx="5.5" cy="12" r="1"/><circle cx="10.5" cy="12" r="1"/>
+      </svg>
+      Cart <div class="cart-n" id="cartN">0</div>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <img src="logo.png" alt="FWRD Preferred" class="hero-logo-img">
+      <div class="hero-season">Private Pre-Shop</div>
+      <h1 class="hero-title">Ralph Lauren Collection<br><em>Pre-Spring 2027</em></h1>
+      <p class="hero-sub">Select individual pieces from each look &nbsp;·&nbsp; Add to cart &nbsp;·&nbsp; Send request</p>
+    </div>
+    <div class="hero-contact">
+      <div class="shopper-photo"><img src="{{SHOPPER_PHOTO}}" alt="{{SHOPPER_NAME}}"></div>
+      <div class="hc-tag">Your Personal Shopper</div>
+      <div class="hc-name">{{SHOPPER_NAME}}</div>
+      <a href="mailto:Austin.Wood@fwrd.com" class="hc-email">Austin.Wood@fwrd.com</a>
+    </div>
+  </div>
+</section>
+
+<!-- BAR -->
+<div class="bar">
+  <div class="bar-l">
+    <div class="ct"><b id="visCt">0</b> looks</div>
+  </div>
+  <div class="bar-r">
+    <button class="vbtn on" id="gvBtn" onclick="setView('grid')" title="Grid">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><rect x="0" y="0" width="4" height="4"/><rect x="6" y="0" width="4" height="4"/><rect x="0" y="6" width="4" height="4"/><rect x="6" y="6" width="4" height="4"/></svg>
+    </button>
+    <button class="vbtn" id="lvBtn" onclick="setView('list')" title="List">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><rect x="0" y="0" width="10" height="2"/><rect x="0" y="4" width="10" height="2"/><rect x="0" y="8" width="10" height="2"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- LOOKS -->
+<main class="main">
+  <div id="looksContainer"></div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <img src="logo.png" alt="FWRD Preferred" style="height:22px;opacity:.4">
+  <div class="f-note">Ralph Lauren Collection Pre-Spring 2027<br>Austin.Wood@fwrd.com · {{SHOPPER_PHONE}}</div>
+</footer>
+
+<!-- SIZE PICKER -->
+<div class="sp-ov" id="spOv" onclick="closeSPOvr(event)">
+  <div class="sp-sheet">
+    <div class="sp-handle"></div>
+    <div class="sp-hdr">
+      <div class="sp-look" id="spLook"></div>
+      <div class="sp-name" id="spName"></div>
+      <div class="sp-meta" id="spMeta"></div>
+    </div>
+    <div class="sp-body">
+      <div class="sp-lbl">Select Your Size</div>
+      <div class="sp-chips" id="spChips"></div>
+      <div class="sp-actions">
+        <button class="sp-cancel" onclick="closeSP()">Cancel</button>
+        <button class="sp-confirm" onclick="confirmSize()">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" onclick="closeLb()">
+  <button class="lb-close" onclick="closeLb()">×</button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<!-- DRAWER -->
+<div class="dov" id="dov" onclick="closeDovOvr(event)">
+  <div class="drawer">
+    <div class="d-hdr">
+      <div><div class="d-title">Request Cart</div><div class="d-ct" id="dCt">0 items</div></div>
+      <button class="d-cls" onclick="closeDrawer()">×</button>
+    </div>
+    <div class="d-email" id="dEmailRow">
+      <img src="{{SHOPPER_PHOTO}}" alt="{{SHOPPER_NAME}}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;object-position:center top;filter:grayscale(100%);flex-shrink:0;border:1px solid var(--rule)">
+      <span class="d-etag">Shopping with Austin</span>
+      <span class="d-eval" id="dEmailVal"></span>
+    </div>
+    <div class="d-items" id="dItems"></div>
+    <div class="d-foot">
+      <div class="d-sum">
+        <div class="d-sum-l"><div class="ds-lbl">Estimated Total</div><div class="ds-n" id="dSumN">0 items</div></div>
+        <div class="d-sum-r" id="dTotal">$0</div>
+      </div>
+      <button class="send-btn" id="sendBtn" onclick="sendReq()">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 1l12 6-12 6V8.5l8-1.5-8-1.5V1z"/></svg>
+        Send Request to Austin
+      </button>
+      <div class="send-note">Austin will confirm availability and follow up at your email</div>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="sscr" id="sscr">
+  <div class="ss-icon">✉</div>
+  <div class="ss-title">Request Sent</div>
+  <div class="ss-sub">Austin will be in touch</div>
+  <div class="ss-detail" id="ssDet"></div>
+  <button class="ss-back" onclick="resetSS()">Continue Shopping</button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   HOW TO ACTIVATE — 3 STEPS, ~5 MINUTES, NO CODE
+   ─────────────────────────────────────────────────────────
+   1. Go to emailjs.com → sign up free (use your Google account)
+   2. Add Email Service → Gmail → Connect your {{SHOPPER_EMAIL}}
+   3. Email Templates → Create New → paste the template from
+      README.txt → copy the 3 IDs and paste them below
+═══════════════════════════════════════════════════════════ */
+
+const EJ_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // Account → Public Key
+const EJ_SERVICE_ID  = 'YOUR_SERVICE_ID';   // Email Services → Service ID
+const EJ_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // Email Templates → Template ID
+const SHEETS_URL     = 'https://script.google.com/macros/s/AKfycbx3n2Sako3JesV__JuoSC_hOOuGhIVOBKnilXkI8ehkNG6XeEg4p7v70sGoQvjA87eK/exec';
+
+emailjs.init(EJ_PUBLIC_KEY);
+
+/* ═══ DATA ══════════════════════════════════════════════ */
+const LOOKS_DATA = {
+  "01": {
+    "label": "Look 01",
+    "items": [
+      {
+        "code": "290P27170001",
+        "name": "LS V-Neck Cardigan",
+        "color": "Stone",
+        "sizes": "XXS-XXL",
+        "retail": "$1,990"
+      },
+      {
+        "code": "290P27168001",
+        "name": "SL Crewneck Shell",
+        "color": "Stone",
+        "sizes": "XXS-XXL",
+        "retail": "$1,490"
+      },
+      {
+        "code": "290B54675001",
+        "name": "Karney Skirt",
+        "color": "Grey Oak Melange",
+        "sizes": "00-20",
+        "retail": "$1,690"
+      },
+      {
+        "code": "435B57135001",
+        "name": "The Ralph Shoulder Bag",
+        "color": "Stone",
+        "sizes": "One Size",
+        "retail": "$3,200"
+      },
+      {
+        "code": "800B55781001",
+        "name": "Shelden Boot",
+        "color": "Icon Tan",
+        "sizes": "35B-41M",
+        "retail": "$1,350"
+      }
+    ]
+  },
+  "04": {
+    "label": "Look 04",
+    "items": [
+      {
+        "code": "290B55348001",
+        "name": "Ramona II Jacket",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$2,990"
+      },
+      {
+        "code": "290P18172501",
+        "name": "Naomie Top",
+        "color": "Stone",
+        "sizes": "XXS-XXL",
+        "retail": "$690"
+      },
+      {
+        "code": "290B55346001",
+        "name": "Kirna Pant",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$1,690"
+      },
+      {
+        "code": "800B55782001",
+        "name": "Tamlin Mule",
+        "color": "Icon Tan",
+        "sizes": "35B-41M",
+        "retail": "$750"
+      }
+    ]
+  },
+  "06": {
+    "label": "Look 06",
+    "items": [
+      {
+        "code": "290B57610001",
+        "name": "Skye II Jacket",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$5,290"
+      },
+      {
+        "code": "290B55610001",
+        "name": "Alicynne Pant",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$3,990"
+      },
+      {
+        "code": "800B55837001",
+        "name": "Bryer 95 Sandal",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "07": {
+    "label": "Look 07",
+    "items": [
+      {
+        "code": "290B55208001",
+        "name": "Meara Top",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$3,890"
+      },
+      {
+        "code": "290974487500",
+        "name": "Masina Skirt",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$2,490"
+      },
+      {
+        "code": "800B55837001",
+        "name": "Bryer 95 Sandal",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "08": {
+    "label": "Look 08",
+    "items": [
+      {
+        "code": "290B62588001",
+        "name": "Largo Shirt",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$4,990"
+      },
+      {
+        "code": "290B55610001",
+        "name": "Alicynne Pant",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$3,990"
+      },
+      {
+        "code": "800B55840001",
+        "name": "Adela 95 Mule",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$1,290"
+      }
+    ]
+  },
+  "09": {
+    "label": "Look 09",
+    "items": [
+      {
+        "code": "290B55442001",
+        "name": "Ardsley Jacket",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$2,890"
+      },
+      {
+        "code": "290B55452001",
+        "name": "Gulden Pant",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$1,990"
+      },
+      {
+        "code": "408B57578001",
+        "name": "Equestrian Bit Rope Belt",
+        "color": "Icon Tan",
+        "sizes": "XXS-XXL",
+        "retail": "$1,500"
+      },
+      {
+        "code": "800B55837001",
+        "name": "Bryer 95 Sandal",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "10": {
+    "label": "Look 10",
+    "items": [
+      {
+        "code": "290P27161001",
+        "name": "SL Rollneck Sweater",
+        "color": "Stone",
+        "sizes": "XXS-XXL",
+        "retail": "$1,290"
+      },
+      {
+        "code": "290B54501003",
+        "name": "LS Hallie Tee",
+        "color": "Stone",
+        "sizes": "XXS-XXL",
+        "retail": "$390"
+      },
+      {
+        "code": "290B54712001",
+        "name": "Pranna Skirt, Embellished",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$4,990"
+      },
+      {
+        "code": "435B57128001",
+        "name": "The Ralph Mini Crossbody Bag",
+        "color": "Silver",
+        "sizes": "One Size",
+        "retail": "$1,700"
+      },
+      {
+        "code": "800B55780001",
+        "name": "Tamlin Mule",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$750"
+      }
+    ]
+  },
+  "11": {
+    "label": "Look 11",
+    "items": [
+      {
+        "code": "290P27172003",
+        "name": "LS Quarter-Zip Sweater",
+        "color": "Stone",
+        "sizes": "XXS-XXL",
+        "retail": "$1,890"
+      },
+      {
+        "code": "290974487500",
+        "name": "Masina Skirt",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$2,490"
+      },
+      {
+        "code": "800B55837001",
+        "name": "Bryer 95 Sandal",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "12": {
+    "label": "Look 12",
+    "items": [
+      {
+        "code": "290B57615001",
+        "name": "Celaena Dress",
+        "color": "Warm Grey",
+        "sizes": "00-20",
+        "retail": "$3,890"
+      },
+      {
+        "code": "408B57578001",
+        "name": "Equestrian Bit Rope Belt",
+        "color": "Icon Tan",
+        "sizes": "XXS-XXL",
+        "retail": "$1,500"
+      },
+      {
+        "code": "800B55837001",
+        "name": "Bryer 95 Sandal",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "13": {
+    "label": "Look 13",
+    "items": [
+      {
+        "code": "290B55256001",
+        "name": "Roothe Top",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$1,690"
+      },
+      {
+        "code": "290P27162001",
+        "name": "LS V-Neck",
+        "color": "Stone",
+        "sizes": "XXS-XXL",
+        "retail": "$1,490"
+      },
+      {
+        "code": "290B55243001",
+        "name": "Macy Pant",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$1,690"
+      },
+      {
+        "code": "800B55837001",
+        "name": "Bryer 95 Sandal",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "14": {
+    "label": "Look 14",
+    "items": [
+      {
+        "code": "290B56127001",
+        "name": "Adrien Shirt",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$1,490"
+      },
+      {
+        "code": "290B54665001",
+        "name": "Melony Top",
+        "color": "Stone/White Gold",
+        "sizes": "00-20",
+        "retail": "$2,490"
+      },
+      {
+        "code": "290B57916001",
+        "name": "Averey Short",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$1,490"
+      },
+      {
+        "code": "408B57578001",
+        "name": "Equestrian Bit Rope Belt",
+        "color": "Icon Tan",
+        "sizes": "XXS-XXL",
+        "retail": "$1,500"
+      },
+      {
+        "code": "800B55839001",
+        "name": "Maisey 65 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$990"
+      }
+    ]
+  },
+  "16": {
+    "label": "Look 16",
+    "items": [
+      {
+        "code": "290B55343001",
+        "name": "Tinslee Dress, Embellished",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$7,500"
+      },
+      {
+        "code": "408B57578001",
+        "name": "Equestrian Bit Rope Belt",
+        "color": "Icon Tan",
+        "sizes": "XXS-XXL",
+        "retail": "$1,500"
+      },
+      {
+        "code": "800B55837001",
+        "name": "Bryer 95 Sandal",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "17": {
+    "label": "Look 17",
+    "items": [
+      {
+        "code": "290B57929001",
+        "name": "Ardsley Jacket",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$2,290"
+      },
+      {
+        "code": "290B57611001",
+        "name": "Vidura Pant",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$1,390"
+      },
+      {
+        "code": "435B62333001",
+        "name": "The Ralph Tote Bag, Large",
+        "color": "Black",
+        "sizes": "One Size",
+        "retail": "$5,500"
+      },
+      {
+        "code": "800B55836001",
+        "name": "Bryer 95 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "18": {
+    "label": "Look 18",
+    "items": [
+      {
+        "code": "290B55269001",
+        "name": "Damien Shirt",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$1,490"
+      },
+      {
+        "code": "290B55402001",
+        "name": "Greer Pant",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$1,690"
+      },
+      {
+        "code": "408B57578001",
+        "name": "Equestrian Bit Rope Belt",
+        "color": "Icon Tan",
+        "sizes": "XXS-XXL",
+        "retail": "$1,500"
+      },
+      {
+        "code": "800B55816001",
+        "name": "Maisey 65 Sandal",
+        "color": "Icon Tan",
+        "sizes": "35B-41M",
+        "retail": "$990"
+      }
+    ]
+  },
+  "19": {
+    "label": "Look 19",
+    "items": [
+      {
+        "code": "290B55608001",
+        "name": "Reversible Effie Coat",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$7,000"
+      },
+      {
+        "code": "290P18075003",
+        "name": "SS Turtleneck",
+        "color": "Lux Cream",
+        "sizes": "XXS-XXL",
+        "retail": "$990"
+      },
+      {
+        "code": "290B55610001",
+        "name": "Alicynne Pant",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$3,990"
+      },
+      {
+        "code": "408B57578001",
+        "name": "Equestrian Bit Rope Belt",
+        "color": "Icon Tan",
+        "sizes": "XXS-XXL",
+        "retail": "$1,500"
+      },
+      {
+        "code": "800B55837001",
+        "name": "Bryer 95 Sandal",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "20": {
+    "label": "Look 20",
+    "items": [
+      {
+        "code": "290B54503001",
+        "name": "Sophie Dress",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$4,490"
+      },
+      {
+        "code": "408B57575001",
+        "name": "25MM Tailored Belt",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$600"
+      },
+      {
+        "code": "800B55839001",
+        "name": "Maisey 65 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$990"
+      }
+    ]
+  },
+  "21": {
+    "label": "Look 21",
+    "items": [
+      {
+        "code": "290P18075005",
+        "name": "SS Turtleneck",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$990"
+      },
+      {
+        "code": "290B55613001",
+        "name": "Vidura Pant, Embellished",
+        "color": "Brown Multi",
+        "sizes": "00-20",
+        "retail": "$4,490"
+      },
+      {
+        "code": "435B57556001",
+        "name": "Letter Opener Satchel",
+        "color": "Black",
+        "sizes": "One Size",
+        "retail": "$3,800"
+      },
+      {
+        "code": "800B55839001",
+        "name": "Maisey 65 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$990"
+      }
+    ]
+  },
+  "22": {
+    "label": "Look 22",
+    "items": [
+      {
+        "code": "290B55448001",
+        "name": "Edina Jacket",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$5,790"
+      },
+      {
+        "code": "290B55612001",
+        "name": "Lysa Skirt",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$3,490"
+      },
+      {
+        "code": "435B57335001",
+        "name": "Letter Opener Satchel XL",
+        "color": "Stone",
+        "sizes": "One Size",
+        "retail": "$4,400"
+      },
+      {
+        "code": "800B55837001",
+        "name": "Bryer 95 Sandal",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "23": {
+    "label": "Look 23",
+    "items": [
+      {
+        "code": "290P26570001",
+        "name": "Cossette Dress",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$5,490"
+      },
+      {
+        "code": "800B55839001",
+        "name": "Maisey 65 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$990"
+      }
+    ]
+  },
+  "24": {
+    "label": "Look 24",
+    "items": [
+      {
+        "code": "290P21028500",
+        "name": "Adrien Dress",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$7,500"
+      },
+      {
+        "code": "290B55364001",
+        "name": "Macy Pant",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$1,290"
+      },
+      {
+        "code": "408B57575001",
+        "name": "25MM Tailored Belt",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$600"
+      },
+      {
+        "code": "800B55836001",
+        "name": "Bryer 95 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "25": {
+    "label": "Look 25",
+    "items": [
+      {
+        "code": "290P26569001",
+        "name": "Jolie Dress",
+        "color": "Lux Cream W/ White Gold",
+        "sizes": "XXS-XXL",
+        "retail": "$3,890"
+      },
+      {
+        "code": "800B55837001",
+        "name": "Bryer 95 Sandal",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "28": {
+    "label": "Look 28",
+    "items": [
+      {
+        "code": "290P24265500",
+        "name": "Sullivan Bomber",
+        "color": "Light Caramel",
+        "sizes": "00-20",
+        "retail": "$5,290"
+      },
+      {
+        "code": "290P18075006",
+        "name": "SS Turtleneck",
+        "color": "Parchment",
+        "sizes": "XXS-XXL",
+        "retail": "$990"
+      },
+      {
+        "code": "290B54708001",
+        "name": "Conwell Pant",
+        "color": "Lux Cream",
+        "sizes": "00-20",
+        "retail": "$2,290"
+      },
+      {
+        "code": "800B55782001",
+        "name": "Tamlin Mule",
+        "color": "Icon Tan",
+        "sizes": "35B-41M",
+        "retail": "$750"
+      }
+    ]
+  },
+  "29": {
+    "label": "Look 29",
+    "items": [
+      {
+        "code": "290B55611001",
+        "name": "Kingsly Dress",
+        "color": "Light Caramel",
+        "sizes": "00-20",
+        "retail": "$6,790"
+      },
+      {
+        "code": "408B57578001",
+        "name": "Equestrian Bit Rope Belt",
+        "color": "Icon Tan",
+        "sizes": "XXS-XXL",
+        "retail": "$1,500"
+      },
+      {
+        "code": "800B55780001",
+        "name": "Tamlin Mule",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$750"
+      }
+    ]
+  },
+  "30": {
+    "label": "Look 30",
+    "items": [
+      {
+        "code": "290P01502001",
+        "name": "Keney Coat",
+        "color": "Tan Multi",
+        "sizes": "00-20",
+        "retail": "$3,990"
+      },
+      {
+        "code": "290B57609001",
+        "name": "Saddler Vest",
+        "color": "Icon Tan",
+        "sizes": "00-20",
+        "retail": "$4,990"
+      },
+      {
+        "code": "290679440001",
+        "name": "Capri Shirt",
+        "color": "White",
+        "sizes": "00-20",
+        "retail": "$790"
+      },
+      {
+        "code": "290B54708001",
+        "name": "Conwell Pant",
+        "color": "Lux Cream",
+        "sizes": "00-20",
+        "retail": "$2,290"
+      },
+      {
+        "code": "800B55816001",
+        "name": "Maisey 65 Sandal",
+        "color": "Icon Tan",
+        "sizes": "35B-41M",
+        "retail": "$990"
+      }
+    ]
+  },
+  "31": {
+    "label": "Look 31",
+    "items": [
+      {
+        "code": "290B54508001",
+        "name": "Carleigh Dress",
+        "color": "Lux Cream",
+        "sizes": "00-20",
+        "retail": "$2,990"
+      },
+      {
+        "code": "435B57127001",
+        "name": "The Ralph Shoulder Bag, Small",
+        "color": "Silver",
+        "sizes": "One Size",
+        "retail": "$2,400"
+      },
+      {
+        "code": "800B55780001",
+        "name": "Tamlin Mule",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$750"
+      }
+    ]
+  },
+  "32": {
+    "label": "Look 32",
+    "items": [
+      {
+        "code": "290B55373001",
+        "name": "Maysen Trench",
+        "color": "White Gold",
+        "sizes": "00-20",
+        "retail": "$4,990"
+      },
+      {
+        "code": "290919112001",
+        "name": "LS Turtleneck Sweater",
+        "color": "Lux Cream",
+        "sizes": "XXS-XXL",
+        "retail": "$1,190"
+      },
+      {
+        "code": "290B55376001",
+        "name": "Novie Skirt",
+        "color": "White Gold",
+        "sizes": "00-20",
+        "retail": "$1,990"
+      },
+      {
+        "code": "800B55837001",
+        "name": "Bryer 95 Sandal",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "34": {
+    "label": "Look 34",
+    "items": [
+      {
+        "code": "290B54673001",
+        "name": "Mindall Dress, Embellished",
+        "color": "Quartz Tan",
+        "sizes": "00-20",
+        "retail": "$9,000"
+      },
+      {
+        "code": "800B55837001",
+        "name": "Bryer 95 Sandal",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "35": {
+    "label": "Look 35",
+    "items": [
+      {
+        "code": "290B55219001",
+        "name": "Rileigh Top",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$1,390"
+      },
+      {
+        "code": "290B55364001",
+        "name": "Macy Pant",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$1,290"
+      },
+      {
+        "code": "800B55836001",
+        "name": "Bryer 95 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "37": {
+    "label": "Look 37",
+    "items": [
+      {
+        "code": "290B58985001",
+        "name": "Perce Jacket",
+        "color": "Lilac",
+        "sizes": "00-20",
+        "retail": "$4,990"
+      },
+      {
+        "code": "290P18075005",
+        "name": "SS Turtleneck",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$990"
+      },
+      {
+        "code": "290B55364001",
+        "name": "Macy Pant",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$1,290"
+      },
+      {
+        "code": "408B57575001",
+        "name": "25MM Tailored Belt",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$600"
+      },
+      {
+        "code": "800B55836001",
+        "name": "Bryer 95 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "38": {
+    "label": "Look 38",
+    "items": [
+      {
+        "code": "290B55371001",
+        "name": "Darienne Dress",
+        "color": "Lilac",
+        "sizes": "00-20",
+        "retail": "$2,790"
+      },
+      {
+        "code": "435B57125001",
+        "name": "Ricky Small Shoulder Bag",
+        "color": "Black",
+        "sizes": "One Size",
+        "retail": "$18,000"
+      },
+      {
+        "code": "800B55836001",
+        "name": "Bryer 95 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "39": {
+    "label": "Look 39",
+    "items": [
+      {
+        "code": "290965603501",
+        "name": "Landry Shirt",
+        "color": "Lilac",
+        "sizes": "00-20",
+        "retail": "$3,490"
+      },
+      {
+        "code": "290B57611001",
+        "name": "Vidura Pant",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$1,390"
+      },
+      {
+        "code": "408880512002",
+        "name": "Casted Concho Belt",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$2,950"
+      },
+      {
+        "code": "800B55839001",
+        "name": "Maisey 65 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$990"
+      }
+    ]
+  },
+  "40": {
+    "label": "Look 40",
+    "items": [
+      {
+        "code": "290B55383001",
+        "name": "Nilla Dress",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$2,290"
+      },
+      {
+        "code": "290B55364001",
+        "name": "Macy Pant",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$1,290"
+      },
+      {
+        "code": "435B57136001",
+        "name": "The Ralph Shoulder Bag",
+        "color": "Black",
+        "sizes": "One Size",
+        "retail": "$3,100"
+      },
+      {
+        "code": "408B57575001",
+        "name": "25MM Tailored Belt",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$600"
+      },
+      {
+        "code": "800B55836001",
+        "name": "Bryer 95 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "41": {
+    "label": "Look 41",
+    "items": [
+      {
+        "code": "290B55358001",
+        "name": "Raffi Dress",
+        "color": "Lux Cream",
+        "sizes": "00-20",
+        "retail": "$3,290"
+      },
+      {
+        "code": "800B55780001",
+        "name": "Tamlin Mule",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$750"
+      }
+    ]
+  },
+  "42": {
+    "label": "Look 42",
+    "items": [
+      {
+        "code": "290679440001",
+        "name": "Capri Shirt",
+        "color": "White",
+        "sizes": "00-20",
+        "retail": "$790"
+      },
+      {
+        "code": "290P27158001",
+        "name": "Hybrid Bomber",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$4,290"
+      },
+      {
+        "code": "290B55364001",
+        "name": "Macy Pant",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$1,290"
+      },
+      {
+        "code": "435B57334001",
+        "name": "Letter Opener Satchel XL",
+        "color": "Black",
+        "sizes": "One Size",
+        "retail": "$4,400"
+      },
+      {
+        "code": "408B57575001",
+        "name": "25MM Tailored Belt",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$600"
+      },
+      {
+        "code": "800B55839001",
+        "name": "Maisey 65 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$990"
+      }
+    ]
+  },
+  "44": {
+    "label": "Look 44",
+    "items": [
+      {
+        "code": "290B55456002",
+        "name": "Ramona II Jacket",
+        "color": "Lux Cream",
+        "sizes": "00-20",
+        "retail": "$2,890"
+      },
+      {
+        "code": "290B55205001",
+        "name": "Tassie Top",
+        "color": "Lux Cream",
+        "sizes": "00-20",
+        "retail": "$1,890"
+      },
+      {
+        "code": "290B55364002",
+        "name": "Macy Pant",
+        "color": "Lux Cream",
+        "sizes": "00-20",
+        "retail": "$1,290"
+      },
+      {
+        "code": "800B55836001",
+        "name": "Bryer 95 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "45": {
+    "label": "Look 45",
+    "items": [
+      {
+        "code": "290P26572001",
+        "name": "Chilton II Dress",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$3,490"
+      },
+      {
+        "code": "800B55836001",
+        "name": "Bryer 95 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "46": {
+    "label": "Look 46",
+    "items": [
+      {
+        "code": "290B54657001",
+        "name": "Reede Dress, Embellished",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$10,000"
+      },
+      {
+        "code": "800B55836001",
+        "name": "Bryer 95 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "47": {
+    "label": "Look 47",
+    "items": [
+      {
+        "code": "290B62189001",
+        "name": "Winsor Jacket",
+        "color": "Red",
+        "sizes": "00-20",
+        "retail": "$3,790"
+      },
+      {
+        "code": "290P26573002",
+        "name": "SS Crewneck Sweater",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$990"
+      },
+      {
+        "code": "290B55364001",
+        "name": "Macy Pant",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$1,290"
+      },
+      {
+        "code": "434B57941001",
+        "name": "Wrap",
+        "color": "Black",
+        "sizes": "One Size",
+        "retail": "$990"
+      },
+      {
+        "code": "408B57575001",
+        "name": "25MM Tailored Belt",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$600"
+      },
+      {
+        "code": "800B55836001",
+        "name": "Bryer 95 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "M03": {
+    "label": "Look M03",
+    "items": [
+      {
+        "code": "290P24111500",
+        "name": "Chilton Dress",
+        "color": "Lilac",
+        "sizes": "00-20",
+        "retail": "$3,690"
+      },
+      {
+        "code": "800B55837001",
+        "name": "Bryer 95 Sandal",
+        "color": "Silver",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "M05": {
+    "label": "Look M05",
+    "items": [
+      {
+        "code": "290B54505001",
+        "name": "Georgiana Top",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$3,290"
+      },
+      {
+        "code": "290P27400001",
+        "name": "Mae Wide Leg Jean",
+        "color": "Backstage Indigo",
+        "sizes": "24-36",
+        "retail": "\u2014"
+      },
+      {
+        "code": "435B57136001",
+        "name": "The Ralph Shoulder Bag",
+        "color": "Black",
+        "sizes": "One Size",
+        "retail": "$3,100"
+      },
+      {
+        "code": "408880512002",
+        "name": "Casted Concho Belt",
+        "color": "Black",
+        "sizes": "XXS-XXL",
+        "retail": "$2,950"
+      },
+      {
+        "code": "800B55836001",
+        "name": "Bryer 95 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "M06": {
+    "label": "Look M06",
+    "items": [
+      {
+        "code": "290B55614001",
+        "name": "Naylor Jacket",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$5,990"
+      },
+      {
+        "code": "290P27400001",
+        "name": "Mae Wide Leg Jean",
+        "color": "Backstage Indigo",
+        "sizes": "24-36",
+        "retail": "\u2014"
+      },
+      {
+        "code": "800B55839001",
+        "name": "Maisey 65 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$990"
+      }
+    ]
+  },
+  "M07": {
+    "label": "Look M07",
+    "items": [
+      {
+        "code": "290B54670001",
+        "name": "Chilton Top",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$1,690"
+      },
+      {
+        "code": "290B54664001",
+        "name": "Millar Pant",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$2,690"
+      },
+      {
+        "code": "800B55836001",
+        "name": "Bryer 95 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "M08": {
+    "label": "Look M08",
+    "items": [
+      {
+        "code": "290P09856500",
+        "name": "Adrien Shirt, Embellished",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$4,990"
+      },
+      {
+        "code": "290B57611001",
+        "name": "Vidura Pant",
+        "color": "Black",
+        "sizes": "00-20",
+        "retail": "$1,390"
+      },
+      {
+        "code": "434B62299001",
+        "name": "Long And Narrow Scarf",
+        "color": "Black",
+        "sizes": "One Size",
+        "retail": "$390"
+      },
+      {
+        "code": "800B55836001",
+        "name": "Bryer 95 Sandal",
+        "color": "Black",
+        "sizes": "35B-41M",
+        "retail": "$1,090"
+      }
+    ]
+  },
+  "M10": {
+    "label": "Look M10",
+    "items": [
+      {
+        "code": "290P18075003",
+        "name": "SS Turtleneck",
+        "color": "Lux Cream",
+        "sizes": "XXS-XXL",
+        "retail": "$990"
+      },
+      {
+        "code": "290P26563001",
+        "name": "LS Shawl Collar Cardigan",
+        "color": "Lux Cream Multi",
+        "sizes": "XXS-XXL",
+        "retail": "$3,290"
+      },
+      {
+        "code": "290B55346001",
+        "name": "Kirna Pant",
+        "color": "Stone",
+        "sizes": "00-20",
+        "retail": "$1,690"
+      },
+      {
+        "code": "408B57578001",
+        "name": "Equestrian Bit Rope Belt",
+        "color": "Icon Tan",
+        "sizes": "XXS-XXL",
+        "retail": "$1,500"
+      },
+      {
+        "code": "800B55782001",
+        "name": "Tamlin Mule",
+        "color": "Icon Tan",
+        "sizes": "35B-41M",
+        "retail": "$750"
+      }
+    ]
+  }
+};
+
+/* ═══ STATE ═════════════════════════════════════════════ */
+let cart = [];          // [{lookKey, item, lookLabel}]
+let selections = {};    // lookKey -> Set of item codes selected
+let activeView = 'grid';
+let clientEmail = '';
+
+// init selections
+Object.keys(LOOKS_DATA).forEach(k => selections[k] = new Set());
+
+/* ═══ UTILS ═════════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+const fmt = n => {
+  if(!n || n === '—') return '—';
+  return n; // already formatted as "$X,XXX"
+};
+const cartTotal = () => {
+  let t = 0;
+  cart.forEach(c => {
+    const r = c.item.retail.replace(/[$,]/g,'');
+    const n = parseFloat(r);
+    if(!isNaN(n)) t += n;
+  });
+  return '$' + t.toLocaleString();
+};
+const imgPath = k => `images/look_${k}.jpg`;
+
+/* ═══ GATE ═══════════════════════════════════════════════ */
+document.body.style.overflow = 'hidden';
+window.addEventListener('load', () => setTimeout(() => $('gateEmail').focus(), 150));
+
+function gateGo() {
+  const el = $('gateEmail'), v = el.value.trim();
+  if(!v || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
+    el.classList.add('err'); el.focus();
+    setTimeout(() => el.classList.remove('err'), 700); return;
+  }
+  clientEmail = v;
+  $('hdrEmail').textContent = v;
+  $('dEmailVal').textContent = v;
+  const pill = $('hdrPill'); pill.style.display = 'flex';
+  const g = $('gate');
+  g.style.transition = 'opacity .4s'; g.style.opacity = '0';
+  setTimeout(() => { g.style.display = 'none'; document.body.style.overflow = ''; }, 420);
+}
+
+/* ═══ RENDER ════════════════════════════════════════════ */
+function render() {
+  const keys = Object.keys(LOOKS_DATA);
+  $('visCt').textContent = keys.length;
+  const container = $('looksContainer');
+
+  if(activeView === 'grid') {
+    container.innerHTML = '<div class="looks-grid" id="looksGrid"></div>';
+    const grid = $('looksGrid');
+    keys.forEach((k, i) => {
+      const div = document.createElement('div');
+      div.className = 'look-card';
+      div.style.animationDelay = (i % 12 * 40) + 'ms';
+      div.innerHTML = buildGridCard(k);
+      grid.appendChild(div);
+    });
+  } else {
+    container.innerHTML = '<div class="looks-list" id="looksList"></div>';
+    const list = $('looksList');
+    keys.forEach((k, i) => {
+      const div = document.createElement('div');
+      div.className = 'look-list-card';
+      div.style.animationDelay = (i % 12 * 30) + 'ms';
+      div.innerHTML = buildListCard(k);
+      list.appendChild(div);
+    });
+  }
+}
+
+function buildGridCard(k) {
+  const look = LOOKS_DATA[k];
+  const sel = selections[k];
+  const selCount = sel.size;
+  const total = look.items.length;
+
+  const itemRows = look.items.map(item => {
+    const isSelected = sel.has(item.code);
+    const chosenSize = itemSizes[`${k}__${item.code}`] || '';
+    const sizeBadge = isSelected && chosenSize ? `<div class="ir-size-badge">${chosenSize}</div>` : '';
+    return `<div class="item-row${isSelected?' selected':''}" onclick="openSP('${k}','${item.code}')">
+      <div class="ir-left">
+        <div class="ir-name">${item.name}</div>
+        <div class="ir-color">${item.color}</div>
+        <div class="ir-sizes">${item.sizes}</div>
+        ${sizeBadge}
+      </div>
+      <div class="ir-right">
+        <div class="ir-retail">${item.retail}</div>
+        <div class="ir-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none" stroke="#fff" stroke-width="1.5"><polyline points="1,3.5 3.5,6 8,1"/></svg></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  let btnLabel = '+ Add Selected to Cart';
+  let btnClass = 'add-look-btn';
+  if(selCount > 0 && selCount < total) { btnClass += ' partial'; btnLabel = `Add ${selCount} Selected to Cart`; }
+  else if(selCount === total) { btnLabel = 'Add All to Cart'; }
+
+  return `
+    <div class="look-photo" onclick="openLb('${k}')">
+      <img src="${imgPath(k)}" alt="${look.label}" loading="lazy">
+      <div class="look-label-badge">${look.label}</div>
+    </div>
+    <div class="look-info">
+      <div class="look-label">${look.label} &nbsp;·&nbsp; ${total} pieces</div>
+      ${itemRows}
+      <button class="${btnClass}" onclick="addSelected('${k}')">${btnLabel}</button>
+      <div class="sel-count" id="sc-${k}">${selCount > 0 ? selCount + ' of ' + total + ' selected' : ''}</div>
+    </div>`;
+}
+
+function buildListCard(k) {
+  const look = LOOKS_DATA[k];
+  const sel = selections[k];
+  const selCount = sel.size;
+  const total = look.items.length;
+
+  const itemRows = look.items.map(item => {
+    const isSelected = sel.has(item.code);
+    const chosenSize = itemSizes[`${k}__${item.code}`] || '';
+    const sizeBadge = isSelected && chosenSize ? `<span class="ir-size-badge" style="margin-left:6px">${chosenSize}</span>` : '';
+    return `<div class="item-row${isSelected?' selected':''}" onclick="openSP('${k}','${item.code}')" style="padding:8px 0">
+      <div class="ir-left">
+        <div class="ir-name" style="font-size:13px">${item.name}${sizeBadge}</div>
+        <div class="ir-color">${item.color} &nbsp;·&nbsp; ${item.sizes}</div>
+      </div>
+      <div class="ir-right">
+        <div class="ir-retail">${item.retail}</div>
+        <div class="ir-check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none" stroke="#fff" stroke-width="1.5"><polyline points="1,3.5 3.5,6 8,1"/></svg></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  let btnLabel = '+ Add Selected';
+  if(selCount > 0 && selCount < total) btnLabel = `Add ${selCount} Selected`;
+  else if(selCount === total) btnLabel = 'Add All';
+
+  return `
+    <div class="llc-img" onclick="openLb('${k}')">
+      <img src="${imgPath(k)}" alt="${look.label}" loading="lazy">
+    </div>
+    <div class="llc-body">
+      <div class="llc-label">${look.label} &nbsp;·&nbsp; ${total} pieces</div>
+      <div class="llc-items">${itemRows}</div>
+      <div class="llc-add">
+        <button class="llc-add-btn${selCount > 0 && selCount < total ? ' partial':''}" onclick="addSelected('${k}')">${btnLabel}</button>
+        <span class="llc-sel" id="sc-${k}">${selCount > 0 ? selCount + ' selected' : ''}</span>
+      </div>
+    </div>`;
+}
+
+/* ═══ STATE additions ═══════════════════════════════════ */
+let itemSizes = {};     // key: "lookKey__itemCode" -> chosen size string
+let spPending = null;   // {lookKey, item}
+
+/* ═══ SIZE PICKER ═══════════════════════════════════════ */
+function parseSizes(sizeStr) {
+  const s = sizeStr.trim();
+
+  // One Size / accessories / no range
+  if(!s || s === 'One Size' || s === '—') return ['One Size'];
+
+  // ── SHOE sizes: any range that starts with a number in the 30s–40s
+  // Covers "35B-41M", "35-42B", "34-41M", "35 B - 41 M" etc.
+  const clean = s.replace(/\s+/g,'');
+  if(/^\d{2}[A-Z]?-\d{2}[A-Z]?$/.test(clean)) {
+    const lo = parseInt(clean);
+    if(lo >= 30 && lo <= 45) {
+      return ['35','36','36.5','37','37.5','38','38.5','39','39.5','40','40.5','41','42'];
+    }
+  }
+
+  // ── CLOTHING alpha sizes (any mention of XXS–XXL or XS–XL range)
+  // Covers "XXS-XXL", "XS-XL", "XS-L", "S-M", "S-XL" etc.
+  if(/^(XXS|XS|S|M|L|XL|XXL)[-–](XXS|XS|S|M|L|XL|XXL)$/.test(clean)) {
+    return ['XS','S','M','L','XL'];
+  }
+
+  // ── CLOTHING numeric sizes "00-20" style → 0,2,4,6,8,10,12
+  if(/^0?0-\d+$/.test(clean)) {
+    return ['0','2','4','6','8','10','12'];
+  }
+
+  // ── DENIM waist sizes "24-36" → cap at 32
+  if(/^\d{2}-\d{2}$/.test(clean)) {
+    const lo = parseInt(clean), hi = parseInt(clean.split('-')[1]);
+    if(lo >= 23 && lo <= 32) {
+      const out = [];
+      for(let i = lo; i <= Math.min(hi, 32); i++) out.push(String(i));
+      return out;
+    }
+  }
+
+  // ── Already a comma list (e.g. "XS, S, M, L")
+  if(s.includes(',')) return s.split(',').map(x => x.trim()).filter(Boolean);
+
+  // Fallback
+  return [s];
+}
+
+function openSP(lookKey, code) {
+  const look = LOOKS_DATA[lookKey];
+  const item = look.items.find(i => i.code === code);
+  if(!item) return;
+
+  spPending = { lookKey, item };
+
+  $('spLook').textContent = look.label;
+  $('spName').textContent = item.name;
+  $('spMeta').textContent = `${item.color}  ·  ${item.retail}`;
+
+  const sizes = parseSizes(item.sizes);
+  const prevSize = itemSizes[`${lookKey}__${code}`] || '';
+
+  if(sizes.length === 1 && sizes[0] === 'One Size') {
+    // No size choice needed — just confirm directly
+    $('spChips').innerHTML = `<div style="font-size:11px;color:var(--mid);letter-spacing:.08em">One Size</div>`;
+    const prev = document.querySelector('.sp-chip.on');
+    if(prev) prev.classList.remove('on');
+  } else {
+    $('spChips').innerHTML = sizes.map(sz =>
+      `<button class="sp-chip${sz === prevSize ? ' on' : ''}" onclick="pickSPChip(this,'${sz}')">${sz}</button>`
+    ).join('');
+  }
+
+  $('spOv').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function pickSPChip(btn, size) {
+  document.querySelectorAll('.sp-chip').forEach(c => c.classList.remove('on','err'));
+  btn.classList.add('on');
+}
+
+function closeSP() {
+  $('spOv').classList.remove('open');
+  document.body.style.overflow = '';
+  spPending = null;
+}
+
+function closeSPOvr(e) { if(e.target === $('spOv')) closeSP(); }
+
+function confirmSize() {
+  if(!spPending) return;
+  const { lookKey, item } = spPending;
+
+  // Check if one-size or size was picked
+  const sizes = parseSizes(item.sizes);
+  let chosenSize = '';
+
+  if(sizes.length === 1 && sizes[0] === 'One Size') {
+    chosenSize = 'One Size';
+  } else {
+    const chip = document.querySelector('.sp-chip.on');
+    if(!chip) {
+      document.querySelectorAll('.sp-chip').forEach(c => c.classList.add('err'));
+      setTimeout(() => document.querySelectorAll('.sp-chip').forEach(c => c.classList.remove('err')), 700);
+      return;
+    }
+    chosenSize = chip.textContent.trim();
+  }
+
+  // Store size and mark selected
+  itemSizes[`${lookKey}__${item.code}`] = chosenSize;
+  selections[lookKey].add(item.code);
+
+  // Add/update in cart
+  const existing = cart.findIndex(c => c.lookKey === lookKey && c.item.code === item.code);
+  const cartEntry = { lookKey, lookLabel: LOOKS_DATA[lookKey].label, item, size: chosenSize };
+  if(existing >= 0) cart[existing] = cartEntry;
+  else cart.push(cartEntry);
+
+  closeSP();
+  syncCart(); popBadge();
+  render(); // re-render to show size badge
+  toast(`${item.name} — Size ${chosenSize} added`);
+}
+
+/* ═══ INTERACTIONS ══════════════════════════════════════ */
+function toggleItem(lookKey, code, el) {
+  // kept for legacy — now handled by openSP
+}
+
+function updateSelCount(k) {
+  const sel = selections[k];
+  const total = LOOKS_DATA[k].items.length;
+  const sc = $(`sc-${k}`); if(!sc) return;
+  sc.textContent = sel.size > 0 ? sel.size + (activeView==='list'?' selected':' of '+total+' selected') : '';
+  const btns = document.querySelectorAll(`[onclick="addSelected('${k}')"]`);
+  btns.forEach(btn => {
+    let label = '+ Add Selected to Cart';
+    let cls = 'add-look-btn';
+    if(activeView==='list') { label='+ Add Selected'; cls='llc-add-btn'; }
+    if(sel.size > 0 && sel.size < total) { cls += ' partial'; label = `Add ${sel.size} Selected${activeView==='grid'?' to Cart':''}`; }
+    else if(sel.size === total) { label = activeView==='grid'?'Add All to Cart':'Add All'; }
+    btn.className = cls;
+    btn.textContent = label;
+  });
+}
+
+function addSelected(k) {
+  // "Add Selected" button — opens size picker for first unselected item,
+  // or if all already selected/sized, confirms toast
+  const look = LOOKS_DATA[k];
+  const sel = selections[k];
+  // find first item not yet in cart with a size
+  const needsSizing = look.items.find(item => !sel.has(item.code));
+  if(needsSizing) {
+    openSP(k, needsSizing.code);
+  } else {
+    toast('All pieces from this look are in your cart');
+  }
+}
+
+/* ═══ LIGHTBOX ══════════════════════════════════════════ */
+function openLb(k) {
+  $('lbImg').src = imgPath(k);
+  $('lb').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLb() { $('lb').classList.remove('open'); document.body.style.overflow = ''; }
+
+/* ═══ VIEW ══════════════════════════════════════════════ */
+function setView(v) {
+  activeView = v;
+  $('gvBtn').classList.toggle('on', v==='grid');
+  $('lvBtn').classList.toggle('on', v==='list');
+  render();
+}
+
+/* ═══ DRAWER ════════════════════════════════════════════ */
+function openDrawer() {
+  $('dov').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderDrawer();
+}
+function closeDrawer() { $('dov').classList.remove('open'); document.body.style.overflow = ''; }
+function closeDovOvr(e) { if(e.target === $('dov')) closeDrawer(); }
+
+function syncCart() {
+  const n = cart.length;
+  $('cartN').textContent = n;
+  $('dCt').textContent = `${n} item${n!==1?'s':''}`;
+  $('dSumN').textContent = `${n} item${n!==1?'s':''}`;
+  $('dTotal').textContent = cartTotal();
+}
+
+function popBadge() {
+  const b = $('cartN'); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop');
+}
+
+function rmFromCart(idx) {
+  cart.splice(idx, 1);
+  syncCart(); renderDrawer();
+}
+
+function renderDrawer() {
+  const el = $('dItems');
+  if(!cart.length) {
+    el.innerHTML = `<div class="d-empty"><div class="d-empty-icon">○</div><div class="d-empty-txt">Cart is empty</div></div>`;
+    return;
+  }
+  el.innerHTML = cart.map((c, i) => `
+    <div class="ditem">
+      <div class="di-lbl"><span>${c.lookLabel.replace('Look ','')}</span></div>
+      <div class="di-info">
+        <div class="di-name">${c.item.name}</div>
+        <div class="di-meta">${c.item.color} &nbsp;·&nbsp; <strong style="color:var(--text)">Size: ${c.size}</strong> &nbsp;·&nbsp; ${c.item.code}</div>
+      </div>
+      <div class="di-right">
+        <div class="di-price">${c.item.retail}</div>
+        <button class="di-rm" onclick="rmFromCart(${i})" title="Remove">×</button>
+      </div>
+    </div>`).join('');
+}
+
+/* ═══ SEND ══════════════════════════════════════════════ */
+async function sendReq() {
+  if(!cart.length) { toast('Cart is empty'); return; }
+
+  const btn = $('sendBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spin"></div> Sending…';
+
+  const ts = new Date().toLocaleString('en-US', {
+    timeZone: 'America/Los_Angeles',
+    month: 'short', day: 'numeric', year: 'numeric',
+    hour: 'numeric', minute: '2-digit', hour12: true
+  });
+
+  // ── Build items for Google Sheets (one row per item) ──
+  const sheetPayload = {
+    ts,
+    email: clientEmail,
+    items: cart.map(c => ({
+      look:   c.lookLabel,
+      name:   c.item.name,
+      color:  c.item.color,
+      size:   c.size,
+      retail: c.item.retail,
+      code:   c.item.code,
+    }))
+  };
+
+  // ── Build HTML table for email ─────────────────────────
+  const rows = cart.map(c =>
+    `<tr>
+      <td style="padding:10px 14px;border-bottom:1px solid #eee;font-family:Arial,sans-serif;font-size:13px">${c.lookLabel}</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #eee;font-family:Arial,sans-serif;font-size:13px">${c.item.name}</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #eee;font-family:Arial,sans-serif;font-size:13px">${c.item.color}</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #eee;font-family:Arial,sans-serif;font-size:13px;font-weight:bold">${c.size}</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #eee;font-family:Arial,sans-serif;font-size:13px">${c.item.retail}</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #eee;font-family:Arial,sans-serif;font-size:13px;color:#888">${c.item.code}</td>
+    </tr>`
+  ).join('');
+
+  const table_html =
+    `<table style="width:100%;border-collapse:collapse;margin-top:16px">
+      <thead><tr style="background:#000">
+        <th style="padding:10px 14px;text-align:left;color:#fff;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase">Look</th>
+        <th style="padding:10px 14px;text-align:left;color:#fff;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase">Item</th>
+        <th style="padding:10px 14px;text-align:left;color:#fff;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase">Color</th>
+        <th style="padding:10px 14px;text-align:left;color:#fff;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase">Size</th>
+        <th style="padding:10px 14px;text-align:left;color:#fff;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase">Retail</th>
+        <th style="padding:10px 14px;text-align:left;color:#fff;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase">Code</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+      <tfoot><tr style="background:#f9f9f9">
+        <td colspan="4" style="padding:10px 14px;font-family:Arial,sans-serif;font-size:12px;color:#888">${cart.length} item${cart.length!==1?'s':''} &nbsp;·&nbsp; ${ts}</td>
+        <td colspan="2" style="padding:10px 14px;font-family:Arial,sans-serif;font-size:14px;font-weight:bold">Est. ${cartTotal()}</td>
+      </tr></tfoot>
+    </table>`;
+
+  try {
+    // ── 1. Google Sheets — always fires ───────────────────
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      mode:   'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body:   JSON.stringify(sheetPayload),
+    });
+
+    // ── 2. Email — fires if EmailJS is configured ─────────
+    if(EJ_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+      await emailjs.send(EJ_SERVICE_ID, EJ_TEMPLATE_ID, {
+        to_email:     '{{SHOPPER_EMAIL}}',
+        client_email: clientEmail,
+        item_count:   cart.length,
+        total_price:  cartTotal(),
+        submitted_at: ts,
+        table_html,
+      });
+    }
+
+    showSS();
+
+  } catch(err) {
+    console.error(err);
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 1l12 6-12 6V8.5l8-1.5-8-1.5V1z"/></svg> Send Request to Austin';
+    toast('Send failed — please try again');
+  }
+}
+
+function showSS() {
+  closeDrawer();
+  $('ssDet').innerHTML = `From: <strong style="color:rgba(255,255,255,.7)">${clientEmail}</strong><br>${cart.length} piece${cart.length!==1?'s':''} &nbsp;·&nbsp; Est. ${cartTotal()}<br>Austin will follow up shortly.`;
+  $('sscr').classList.add('open');
+}
+function resetSS() {
+  cart = [];
+  itemSizes = {};
+  Object.keys(LOOKS_DATA).forEach(k => selections[k] = new Set());
+  syncCart(); renderDrawer(); render();
+  $('sscr').classList.remove('open');
+}
+
+/* ═══ TOAST ════════════════════════════════════════════ */
+function toast(msg) {
+  const t = $('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+document.addEventListener('keydown', e => { if(e.key==='Escape'){closeLb();closeDrawer();closeSP();} });
+
+/* ═══ INIT ══════════════════════════════════════════════ */
+if('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+render(); syncCart();
+</script>
+</body>
+</html>
