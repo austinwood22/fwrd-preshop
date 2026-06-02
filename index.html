@@ -7,6 +7,23 @@
 <meta name="apple-mobile-web-app-title" content="ALAÏA Pre-Shop">
 <meta name="theme-color" content="#000000">
 <title>ALAÏA — Winter / Spring 2027 · Private Pre-Shop</title>
+<script>
+/* One-time cleanup: remove any leftover service worker / caches from the previous (Ralph Lauren) site,
+   then reload once so the visitor lands on the current version. No action needed from the client. */
+(function(){
+  try{
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.getRegistrations().then(function(rs){
+        if(rs && rs.length){
+          rs.forEach(function(r){r.unregister();});
+          if(window.caches){caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k);});});}
+          if(!sessionStorage.getItem('sw_cleared')){sessionStorage.setItem('sw_cleared','1');location.reload();}
+        }
+      }).catch(function(){});
+    }
+  }catch(e){}
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -227,9 +244,9 @@ img{display:block}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
 /* FWRD PREFERRED BRAND MARK */
 .hdr-brand{display:flex;align-items:center;text-decoration:none}
-.hdr-logo-img{height:17px;display:block}
-.gate-logo-img{height:21px;display:block;margin:0 auto 20px;opacity:.92}
-.f-logo-img{height:20px;display:block;opacity:.6}
+.hdr-logo-img{height:18px;display:block}
+.gate-logo-img{height:28px;display:block;margin:0 auto 20px;opacity:.92}
+.f-logo-img{height:22px;display:block;opacity:.6}
 .brand-fb{display:none;font-family:'Cormorant',serif;color:#fff;align-items:baseline}
 .brand-fb em{font-style:italic;opacity:.65;font-size:.72em;margin-left:.45em;letter-spacing:.16em}
 .hdr-fb{font-size:15px;letter-spacing:.34em;padding-left:.32em}
@@ -469,17 +486,60 @@ async function sendReq(){
   const table_html=`<table style="width:100%;border-collapse:collapse;margin-top:16px"><thead><tr style="background:#000">${['Category','Item','Color','Size','Retail','Code'].map(h=>`<th style="padding:10px 14px;text-align:left;color:#fff;font-family:Arial;font-size:11px;letter-spacing:1px;text-transform:uppercase">${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody><tfoot><tr style="background:#f9f9f9"><td colspan="4" style="padding:10px 14px;font-family:Arial;font-size:12px;color:#888">${cart.length} item${cart.length!==1?'s':''} · ${ts}</td><td colspan="2" style="padding:10px 14px;font-family:Arial;font-size:14px;font-weight:bold">Est. ${cartTotal()}</td></tr></tfoot></table>`;
   try{
     await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(sheetPayload)});
-    if(EJ_PUBLIC_KEY!=='YOUR_PUBLIC_KEY'){await emailjs.send(EJ_SERVICE_ID,EJ_TEMPLATE_ID,{to_email:'Austin.Wood@fwrd.com',client_email:clientEmail,item_count:cart.length,total_price:cartTotal(),submitted_at:ts,table_html});}
+    if(EJ_PUBLIC_KEY!=='YOUR_PUBLIC_KEY'){await emailjs.send(EJ_SERVICE_ID,EJ_TEMPLATE_ID,{to_email:ST.email,client_email:clientEmail,item_count:cart.length,total_price:cartTotal(),submitted_at:ts,table_html});}
     showSS();
-  }catch(err){console.error(err);btn.disabled=false;btn.innerHTML='<svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 1l12 6-12 6V8.5l8-1.5-8-1.5V1z"/></svg> Send Request to Austin';toast('Send failed — please try again')}
+  }catch(err){console.error(err);btn.disabled=false;btn.innerHTML=sendLabel();toast('Send failed — please try again')}
 }
-function showSS(){closeDrawer();$('ssDet').innerHTML=`From: <strong style="color:rgba(255,255,255,.7)">${clientEmail}</strong><br>${cart.length} piece${cart.length!==1?'s':''} · Est. ${cartTotal()}<br>Austin will follow up shortly.`;$('sscr').classList.add('open')}
+function showSS(){closeDrawer();$('ssDet').innerHTML=`From: <strong style="color:rgba(255,255,255,.7)">${clientEmail}</strong><br>${cart.length} piece${cart.length!==1?'s':''} · Est. ${cartTotal()}<br>${ST.firstName} will follow up shortly.`;$('sscr').classList.add('open')}
 function resetSS(){cart=[];syncCart();renderDrawer();render();$('sscr').classList.remove('open')}
 
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLb();closeDrawer();closeSP()}});
 window.addEventListener('scroll',()=>{$('toTop').classList.toggle('show',window.scrollY>420)},{passive:true});
-buildCats();render();syncCart();
+/* ════════ YOUR TEAM — STYLISTS ════════
+   Each stylist gets their own page via a link:  ...?s=yvette
+   The page shows their name + photo and routes the request to THEIR email.
+   EDIT the emails below to each stylist's real address, and drop a photo named
+   to match (yvette.png, christina.png, …) in the folder. No photo = initials shown. */
+const STYLISTS={
+  austin:    {name:'Austin Wood',       email:'Austin.Wood@fwrd.com',       phone:'213-222-5189',     photo:'austin.png'},
+  yvette:    {name:'Yvette Han',        email:'yvette.han@fwrd.com',        phone:'778-951-6086',     photo:'yvette.png'},
+  christina: {name:'Christina Drummond',email:'christina.drummond@fwrd.com', phone:'516-209-1363',     photo:'christina.png'},
+  theo:      {name:'Theo Robinson',     email:'theo.robinson@fwrd.com',      phone:'+44 7378 421797',  photo:'theo.png'},
+  andy:      {name:'Andy Adondakis',    email:'andy.adondakis@fwrd.com',     phone:'562-636-9111',     photo:'andy.png'},
+  amber:     {name:'Amber Silva',       email:'amber.silva@fwrd.com',        phone:'858-263-6834',     photo:'amber.png'},
+  randy:     {name:'Randy Morales',     email:'randy.morales@fwrd.com',      phone:'562-405-4623',     photo:'randy.png'},
+  stefanie:  {name:'Stefanie Strnad',   email:'stefanie.strnad@fwrd.com',    phone:'213-259-6497',     photo:'stefanie.png'},
+  nichole:   {name:'Nichole Green',     email:'nichole.green@fwrd.com',      phone:'646-403-5307',     photo:'nichole.png'}
+};
+const DEFAULT_STYLIST='austin';   // page shown when no ?s= is given
+const SEND_ICON='<svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 1l12 6-12 6V8.5l8-1.5-8-1.5V1z"/></svg>';
+let ST;
+function initials(n){const p=n.trim().split(/\s+/);return (p.length>1?(p[0][0]+p[p.length-1][0]):p[0].slice(0,2)).toUpperCase();}
+function sendLabel(){return SEND_ICON+' Send Request to '+ST.firstName;}
+function applyStylist(){
+  const q=new URLSearchParams(location.search);
+  const slug=(q.get('s')||q.get('stylist')||DEFAULT_STYLIST).toLowerCase();
+  const s=STYLISTS[slug]||STYLISTS[DEFAULT_STYLIST];
+  ST={...s, firstName:s.name.split(' ')[0], slug};
+  const ini=initials(s.name);
+  const set=(sel,fn)=>{const el=document.querySelector(sel); if(el)fn(el);};
+  set('.gate-photo img',el=>{el.src=s.photo;el.alt=s.name;});
+  set('.gate-photo .ph-mono',el=>el.textContent=ini);
+  set('.gate-season',el=>el.textContent='Curated by '+s.name);
+  set('.shopper-photo img',el=>{el.src=s.photo;el.alt=s.name;});
+  set('.shopper-photo .ph-mono',el=>el.textContent=ini);
+  set('.hc-name',el=>el.textContent=s.name);
+  set('.hc-email',el=>{el.textContent=s.email;el.href='mailto:'+s.email;});
+  set('.hero-sub',el=>el.innerHTML='Winter / Spring 2027 &nbsp;·&nbsp; Select pieces &nbsp;·&nbsp; Choose your size &nbsp;·&nbsp; Send to '+ST.firstName);
+  set('.f-note',el=>el.innerHTML='ALAÏA Winter / Spring 2027 — Private Pre-Shop<br>'+s.name+' · FWRD Preferred · '+s.email+(s.phone?' · '+s.phone:''));
+  set('.d-etag',el=>el.textContent='Shopping with '+ST.firstName);
+  set('.send-note',el=>el.textContent=ST.firstName+' will confirm availability & follow up at your email');
+  set('.ss-sub',el=>el.textContent=ST.firstName+' will be in touch');
+  const sb=$('sendBtn'); if(sb)sb.innerHTML=sendLabel();
+  document.title='ALAÏA — Winter / Spring 2027 · '+s.name;
+}
+applyStylist();buildCats();render();syncCart();
 </script>
 </body>
 </html>
