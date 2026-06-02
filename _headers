@@ -1,0 +1,18 @@
+# Cloudflare Pages — caching rules
+# Goal: the page always reflects the latest deploy; no hard-refresh / cache-clear needed.
+
+# The page itself + its data: never serve a stale copy — revalidate on every load.
+/
+  Cache-Control: public, max-age=0, must-revalidate
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Product photos: cache briefly for speed, but revalidate so swapped photos show up fast.
+/img/*
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# Brand assets: same quick-revalidate behavior.
+/logo.png
+  Cache-Control: public, max-age=3600, must-revalidate
+/austin.png
+  Cache-Control: public, max-age=3600, must-revalidate
