@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "fwrd-preferred",
+  "name": "fwrd-preshop",
   "compatibility_date": "2026-06-02",
   "observability": {
     "enabled": true
