@@ -481,11 +481,12 @@ async function sendReq(){
   if(!cart.length){toast('Cart is empty');return}
   const btn=$('sendBtn');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Sending…';
   const ts=new Date().toLocaleString('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true});
-  const sheetPayload={ts,email:clientEmail,items:cart.map(c=>({name:c.name,cat:c.cat,color:c.color,size:c.size,retail:c.retail_str,code:c.code}))};
+  const sheetItems=cart.map(c=>({brand:'ALAÏA',name:c.name,code:c.code,size:c.size+(c.color&&c.color!=='—'?' / '+c.color:'')}));
+  const sheetUrl=SHEETS_URL+'?submittedAt='+encodeURIComponent(ts)+'&clientEmail='+encodeURIComponent(clientEmail)+'&stylist='+encodeURIComponent(ST.name)+'&items='+encodeURIComponent(JSON.stringify(sheetItems));
   const rows=cart.map(c=>`<tr><td style="padding:10px 14px;border-bottom:1px solid #eee;font-family:Arial;font-size:13px">${c.cat}</td><td style="padding:10px 14px;border-bottom:1px solid #eee;font-family:Arial;font-size:13px">${c.name}</td><td style="padding:10px 14px;border-bottom:1px solid #eee;font-family:Arial;font-size:13px">${c.color}</td><td style="padding:10px 14px;border-bottom:1px solid #eee;font-family:Arial;font-size:13px;font-weight:bold">${c.size}</td><td style="padding:10px 14px;border-bottom:1px solid #eee;font-family:Arial;font-size:13px">${c.retail_str}</td><td style="padding:10px 14px;border-bottom:1px solid #eee;font-family:Arial;font-size:13px;color:#888">${c.code}</td></tr>`).join('');
   const table_html=`<table style="width:100%;border-collapse:collapse;margin-top:16px"><thead><tr style="background:#000">${['Category','Item','Color','Size','Retail','Code'].map(h=>`<th style="padding:10px 14px;text-align:left;color:#fff;font-family:Arial;font-size:11px;letter-spacing:1px;text-transform:uppercase">${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody><tfoot><tr style="background:#f9f9f9"><td colspan="4" style="padding:10px 14px;font-family:Arial;font-size:12px;color:#888">${cart.length} item${cart.length!==1?'s':''} · ${ts}</td><td colspan="2" style="padding:10px 14px;font-family:Arial;font-size:14px;font-weight:bold">Est. ${cartTotal()}</td></tr></tfoot></table>`;
   try{
-    await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(sheetPayload)});
+    await fetch(sheetUrl,{method:'GET',mode:'no-cors'});
     if(EJ_PUBLIC_KEY!=='YOUR_PUBLIC_KEY'){await emailjs.send(EJ_SERVICE_ID,EJ_TEMPLATE_ID,{to_email:ST.email,client_email:clientEmail,item_count:cart.length,total_price:cartTotal(),submitted_at:ts,table_html});}
     showSS();
   }catch(err){console.error(err);btn.disabled=false;btn.innerHTML=sendLabel();toast('Send failed — please try again')}
